@@ -32,8 +32,11 @@ function App() {
   const expectedReturnNumber = parseFloat(expectedReturn);
   const durationNumber = parseFloat(duration);
 
+
+  const isValid = durationNumber >= 1;
+
   let resultData = [];
-  if (initialNumber && annualNumber && expectedReturnNumber && durationNumber) {
+  if (initialNumber && annualNumber && expectedReturnNumber && durationNumber && isValid ) {
     resultData = calculateInvestmentResults({
       initialInvestment: initialNumber,
       annualInvestment: annualNumber,
@@ -55,10 +58,11 @@ function App() {
         </div>
       </div>
       {
-        initialNumber && annualNumber && expectedReturnNumber && durationNumber ?
+        initialNumber && annualNumber && expectedReturnNumber && durationNumber && isValid ?
           <ResultTable resultData={resultData} />
           : null
       }
+      {!isValid && (<p id='text-danger'>Invalid input</p>) }
     </>
   );
 }

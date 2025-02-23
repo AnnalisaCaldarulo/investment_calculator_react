@@ -88,3 +88,7 @@ body {
 .center {
   text-align: center;
 }
+#text-danger{
+  text-align: center;
+  color: red;
+}

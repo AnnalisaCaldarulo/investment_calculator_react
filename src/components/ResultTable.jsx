@@ -1,6 +1,6 @@
+import { formatter } from "../util/investment";
 const ResultTable = ({ resultData }) => {
-    console.log(resultData[0]);
-
+    const initialInvestment = resultData[0].valueEndOfYear - resultData[0].interest - resultData[0].annualInvestment
     return (
         <table id="result">
             <thead>
@@ -14,15 +14,19 @@ const ResultTable = ({ resultData }) => {
             </thead>
             <tbody>
                 {
-                    resultData.map((year) => (                        
-                        <tr key={year.year}>
-                            <th> {year.year} </th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                        </tr>
-                    ))
+                    resultData.map((result) => {
+                        const totalInterest = result.valueEndOfYear - result.annualInvestment * result.year - initialInvestment;
+                        const totalAmountInvestment = result.valueEndOfYear - totalInterest;
+                        return (
+                            <tr key={result.year}>
+                                <th> {result.year} </th>
+                                <td>{formatter.format(result.valueEndOfYear)}</td>
+                                <td>{formatter.format(result.interest)} </td>
+                                <td>{formatter.format(totalInterest)} </td>
+                                <td>{formatter.format(totalAmountInvestment)}</td>
+                            </tr>
+                        )
+                    })
                 }
 
 

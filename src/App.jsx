@@ -2,12 +2,14 @@ import UserInput from "./components/UserInput";
 import { useState } from "react";
 import ResultTable from "./components/ResultTable";
 import { calculateInvestmentResults } from './util/investment';
-function App() {
 
-  const [initial, setInitial] = useState(1000);
-  const [annual, setAnnual] = useState(1200);
-  const [expectedReturn, setExpectedReturn] = useState(6);
-  const [duration, setDuration] = useState(10);
+function App() {
+  // stringhe per gli stati iniziali
+  const [initial, setInitial] = useState("1000");
+  const [annual, setAnnual] = useState("1200");
+  const [expectedReturn, setExpectedReturn] = useState("6");
+  const [duration, setDuration] = useState("10");
+
   function handleChangeInitial(e) {
     setInitial(e.target.value);
   }
@@ -23,14 +25,23 @@ function App() {
   function handleChangeDuration(e) {
     setDuration(e.target.value);
   }
-  let resultData = {};
-  if (initial && annual && expectedReturn && duration) {
-    resultData = calculateInvestmentResults({  initialInvestment: initial,
-      annualInvestment: annual,
-      expectedReturn: expectedReturn,
-      duration: duration,});
+
+  // conversione dei valori in numeri per evitare errori con Nan 
+  const initialNumber = parseFloat(initial);
+  const annualNumber = parseFloat(annual);
+  const expectedReturnNumber = parseFloat(expectedReturn);
+  const durationNumber = parseFloat(duration);
+
+  let resultData = [];
+  if (initialNumber && annualNumber && expectedReturnNumber && durationNumber) {
+    resultData = calculateInvestmentResults({
+      initialInvestment: initialNumber,
+      annualInvestment: annualNumber,
+      expectedReturn: expectedReturnNumber,
+      duration: durationNumber,
+    });
   }
-  
+
   return (
     <>
       <div id="user-input">
@@ -44,13 +55,12 @@ function App() {
         </div>
       </div>
       {
-        initial && annual && expectedReturn && duration && (
-          < ResultTable resultData={resultData} />
-        )
+        initialNumber && annualNumber && expectedReturnNumber && durationNumber ?
+          <ResultTable resultData={resultData} />
+          : null
       }
     </>
   );
-
 }
 
-export default App
+export default App;

@@ -1,5 +1,5 @@
-const ResultTable = ({ result }) => {
-    console.log(result[0]);
+const ResultTable = ({ resultData }) => {
+    console.log(resultData[0]);
 
     return (
         <table id="result">
@@ -14,7 +14,7 @@ const ResultTable = ({ result }) => {
             </thead>
             <tbody>
                 {
-                    result.map((year) => (                        
+                    resultData.map((year) => (                        
                         <tr key={year.year}>
                             <th> {year.year} </th>
                             <td>Mark</td>

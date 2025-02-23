@@ -4,11 +4,10 @@ import ResultTable from "./components/ResultTable";
 import { calculateInvestmentResults } from './util/investment';
 function App() {
 
-  const [initial, setInitial] = useState('');
-  const [annual, setAnnual] = useState('');
-  const [expectedReturn, setExpectedReturn] = useState('');
-  const [duration, setDuration] = useState('');
-  const [isComplete, setIsComplete] = useState(false);
+  const [initial, setInitial] = useState(1000);
+  const [annual, setAnnual] = useState(1200);
+  const [expectedReturn, setExpectedReturn] = useState(6);
+  const [duration, setDuration] = useState(10);
   function handleChangeInitial(e) {
     setInitial(e.target.value);
   }
@@ -24,10 +23,14 @@ function App() {
   function handleChangeDuration(e) {
     setDuration(e.target.value);
   }
-  let resultObject = {};
+  let resultData = {};
   if (initial && annual && expectedReturn && duration) {
-    resultObject = calculateInvestmentResults({ initial, annual, expectedReturn, duration });
+    resultData = calculateInvestmentResults({  initialInvestment: initial,
+      annualInvestment: annual,
+      expectedReturn: expectedReturn,
+      duration: duration,});
   }
+  
   return (
     <>
       <div id="user-input">
@@ -42,7 +45,7 @@ function App() {
       </div>
       {
         initial && annual && expectedReturn && duration && (
-          < ResultTable result={resultObject} />
+          < ResultTable resultData={resultData} />
         )
       }
     </>
